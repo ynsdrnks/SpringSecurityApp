@@ -271,5 +271,11 @@ public class MainController {
         map.put("title", "Yönetim Paneli");
         return "admin-panel";
     }
+    @GetMapping("/new-employee")
+    public String newCalisan2(Model model){
+        Calisan calisan = new Calisan();
+        model.addAttribute("calisan",calisan);
+        return "new-calisan";
+    }
 }
 
