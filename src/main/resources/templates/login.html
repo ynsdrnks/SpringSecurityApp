@@ -1,0 +1,39 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>>Security App</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="/webjars/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/4.5.3/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+	<div class="row">
+		<div lang="tr" th:replace="fragments/header :: header"></div> 
+		<div lang="tr" th:replace="fragments/header :: title"></div>
+
+		<div class="col-md-6" style="border:2px solid #ddd">
+		    <div class="alert alert-danger" role="alert" th:if="${param.error}">
+		        Kullanıcı Adı veya Şifre yanlış.
+		    </div>
+		    <form th:action="@{/login}" method="post">
+		        <label>Email </label>
+		        <input type="email" name="username" class="form-control" placeholder="Email giriniz."/>
+		        <label>Password</label>
+		        <input type="password" id="password" name="password" class="form-control" placeholder="Şifre giriniz."/>
+		        <br/>
+		        <button class="btn btn-primary text-center form-control" type="submit">Giriş Yap</button>
+		        <br/>
+		        <br/>
+		        <div class="margin-top20 text-center"><a th:href="@{/register}">Üye Olma Sayfasına Git</a>
+	        	<hr>
+		        </div>
+		    </form>
+		</div>
+	</div>
+</div>
+
+	<div lang="tr" th:replace="fragments/header :: jsfile"></div>
+</body>
+</html>
