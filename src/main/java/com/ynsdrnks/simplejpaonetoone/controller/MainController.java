@@ -50,7 +50,7 @@ public class MainController {
     }
 
 
-    @GetMapping("/customer/insert-customer")
+    @GetMapping("/employee/insert-employee")
     public String newCalisan(Model model){
         Calisan calisan = new Calisan();
         model.addAttribute("calisan",calisan);
@@ -250,7 +250,7 @@ public class MainController {
         return "index";
     }
 
-    @RequestMapping("/customer/customers")
+    @RequestMapping("/employee/employees")
     public String index(Model model){
         List<Calisan> listCalisans = calisanService.listAllCalisans();
         model.addAttribute("listCalisans",listCalisans);
