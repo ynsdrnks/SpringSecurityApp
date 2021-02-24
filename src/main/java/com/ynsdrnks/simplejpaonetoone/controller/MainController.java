@@ -271,7 +271,7 @@ public class MainController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         map.put("adminname", auth.getName());
-        map.put("title", "Yönetim Paneli");
+        map.put("title", "Admin Panel");
         return "admin/admin-panel";
     }
     @GetMapping("/new-employee")
