@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.*;
 
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -287,5 +288,9 @@ public class MainController {
         return "admin/admin-employee-list";
     }
 
+    @RequestMapping("/accessdenied")
+    public ModelAndView accessdenied() {
+        return new ModelAndView("accessdenied");
+    }
 }
 

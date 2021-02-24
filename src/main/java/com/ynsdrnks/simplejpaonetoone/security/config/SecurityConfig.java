@@ -1,5 +1,6 @@
 package com.ynsdrnks.simplejpaonetoone.security.config;
 
+import com.ynsdrnks.simplejpaonetoone.exception.CustomAccessDeniedHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -11,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -39,6 +41,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .logout()
         .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
         .logoutSuccessUrl("/login").permitAll().permitAll()
+				.and()
+				.exceptionHandling().accessDeniedPage("/accessdenied")
         .and()
         .httpBasic();;
 	}
@@ -46,5 +50,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public BCryptPasswordEncoder encodePwd() {
 		return new BCryptPasswordEncoder();
+	}
+	@Bean
+	public AccessDeniedHandler accessDeniedHandler(){
+		return new CustomAccessDeniedHandler();
 	}
 }
