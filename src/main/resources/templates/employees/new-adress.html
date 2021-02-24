@@ -8,9 +8,9 @@
 </head>
 <body>
 
-    <title>Yeni Adres</title>
+    <title>New Address</title>
     <div align="center">
-        <h1>Adres Ekle</h1>
+        <h1>Add Address</h1>
         <a th:href="@{'/'}">Home Page</a><br><br>
         <div>
             &nbsp&nbsp&nbsp
@@ -19,27 +19,27 @@
             <table border="0" cellpadding="10">
 
                 <tr>
-                    <td>Şehir</td>
+                    <td>Province</td>
                     <td><input type="text" th:field="*{sehir}" required/>    </td>
                 </tr>
 
                 <tr>
-                    <td>İlçe</td>
+                    <td>District</td>
                     <td><input type="text" th:field="*{ilce}" required/></td>
                 </tr>
 
                 <tr>
-                    <td>Mahalle</td>
+                    <td>Neighborhood</td>
                     <td><input type="text" th:field="*{mahalle}" required/></td>
                 </tr>
 
                 <tr>
-                    <td>Sokak</td>
+                    <td>Street</td>
                     <td><input type="text" th:field="*{sokak}" required/></td>
                 </tr>
 
                 <tr>
-                    <td>Bina no</td>
+                    <td>Apartment no</td>
                     <td><input type="number" th:field="*{binaNum}" min="1" max="200" required/></td>
                 </tr>
 
@@ -48,7 +48,7 @@
                 </tr>
 
                 <tr>
-                    <td colspan="1"><button type="submit">Kaydet</button></td>
+                    <td colspan="1"><button type="submit">Save</button></td>
                 </tr>
             </table>
         </form>

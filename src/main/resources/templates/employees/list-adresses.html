@@ -4,15 +4,15 @@
 <head>
 
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.5.3/css/bootstrap.min.css}" />
-    <title>Çalışana Ait Adresler</title>
+    <title>Employee Addresses</title>
 </head>
 <body>
 <div align="center">
 
-    <h1>Çalışan Adresleri</h1>
+    <h1>Employee Addresses</h1>
     <a th:href="@{'/employee/employees'}">Employee List</a><br><br>
 
-    <a th:href="@{'/list-addresses/add-address/' + ${listAdresses.get(0).calisanId}}">Yeni Adres Ekle(Dropdown List)</a><br>
+    <a th:href="@{'/list-addresses/add-address/' + ${listAdresses.get(0).calisanId}}">Add New Address(Dropdown List)</a><br>
 
     <link href="webjars/bootstrap/4.5.3/css/bootstrap.min.css" rel="stylesheet">
     <br/><br/>
@@ -31,15 +31,15 @@
         <tbody>
         <tr th:each="adress: ${listAdresses}">
             <td th:text="${adress.country.countryName}">Country</td>
-            <td th:text="${adress.city.cityName}">Şehir</td>
-            <td th:text="${adress.district.districtName}">İlçe</td>
-            <td th:text="${adress.addressDetails}">Adres Detay</td>
+            <td th:text="${adress.city.cityName}">City</td>
+            <td th:text="${adress.district.districtName}">District</td>
+            <td th:text="${adress.addressDetails}">Adress Details</td>
             <td th:hidden="${adress.calisanId}"></td>
 
             <link href="webjars/bootstrap/4.5.3/css/bootstrap.min.css" rel="stylesheet">
-            <td><a th:href="@{'/edit-address/' + ${adress.calisanId}+'/'+${adress.adressDropDownId}}">Adres Düzenle</a>
+            <td><a th:href="@{'/edit-address/' + ${adress.calisanId}+'/'+${adress.adressDropDownId}}">Edit Address</a>
               &nbsp;
-                <a th:href="@{'/delete-address/' + ${adress.calisanId}+'/'+${adress.adressDropDownId}}">Adres Sil</a>
+                <a th:href="@{'/delete-address/' + ${adress.calisanId}+'/'+${adress.adressDropDownId}}">Delete Address</a>
                 &nbsp;
             </td>
 

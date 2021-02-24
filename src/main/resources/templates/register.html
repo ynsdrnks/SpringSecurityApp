@@ -20,14 +20,14 @@
             </div>
             <div th:unless="${message}">
                 <form autocomplete="off" action="#" th:action="@{/register}" th:object="${user}" method="post">
-                    <label>Kullanıcı Adı</label>
-                    <input type="text" id="firstName" placeholder="First Name" th:field="*{username}" class="form-control" required="required"/><br/>
-                    <label>İsim</label>
+                    <label>Username</label>
+                    <input type="text" id="userName" placeholder="User Name" th:field="*{username}" class="form-control" required="required"/><br/>
+                    <label>Name</label>
                     <input type="text" id="firstName" placeholder="First Name" th:field="*{firstname}" class="form-control" required="required"/><br/>
-                    <label>Soyisim </label>
+                    <label>Last Name</label>
                     <input type="text" id="lastname" placeholder="Last Name" th:field="*{lastname}" class="form-control" required="required"/><br/>
 
-                    <label>Cinsiyet </label>
+                    <label>Gender </label>
                     <ul>
                         <li>
                             <input type="radio"  th:field="*{gender}" th:value="'male	'" />
@@ -36,7 +36,7 @@
                             <label th:text="'female'"></label>
                         </li>
                     </ul>
-                    <label>Role Seçiniz.</label>
+                    <label>Choose Role.</label>
                     <select name="roles" class="form-control">
                         <option th:each="role : ${roles}"
                                 th:value="${role.getRole_id()}"
@@ -45,13 +45,13 @@
 
                     <label>Eposta</label>
                     <input type="text" id="email" placeholder=" Email" th:field="*{email}" class="form-control" required="required"/><br/>
-                    <label>Parolanız </label>
+                    <label>Password </label>
                     <input type="text" id="password" placeholder=" Password" th:field="*{password}" class="form-control" required="required"/><br/>
-                    <button type="submit" class="btn btn-primary text-center form-control">Kaydet</button>
+                    <button type="submit" class="btn btn-primary text-center form-control">Save</button>
                 </form>
             </div>
 
-            <div class="margin-top20 text-center"><a th:href="@{/login}">Giriş Sayfasına Git</a></div>
+            <div class="margin-top20 text-center"><a th:href="@{/login}">Go Login Page</a></div>
             <hr>
             <hr>
         </div>
