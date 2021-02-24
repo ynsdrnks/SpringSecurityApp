@@ -7,6 +7,13 @@
     <title>Employee List</title>
 </head>
 <body>
+<div class="container">
+    <div class="row">
+        <div lang="tr" th:replace="fragments/header :: header"></div>
+        <div lang="tr" th:replace="fragments/header :: title"></div>
+        <div class="col-md-6">
+            <img alt=""  class="img-thumbnail " src="https://static.javatpoint.com/sppages/springsecurity/images/spring-security-tutorial.png">
+        </div>
 <div align="center">
     <h1>Employee List For Users</h1>
     <a th:href="@{'/logout'}" class="btn btn-primary" >Logout</a>
