@@ -1,4 +1,4 @@
-package com.ynsdrnks.simplejpaonetoone.controller;
+package com.ynsdrnks.simplejpaonetoone.security.controller;
 
 
 import com.ynsdrnks.simplejpaonetoone.security.domain.User;

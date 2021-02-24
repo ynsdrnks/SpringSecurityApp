@@ -55,7 +55,7 @@ public class MainController {
     public String newCalisan(Model model){
         Calisan calisan = new Calisan();
         model.addAttribute("calisan",calisan);
-        return "new-calisan";
+        return "employees/new-calisan";
     }
 
     @RequestMapping(value = "/save-employee",method = RequestMethod.POST)
@@ -92,7 +92,7 @@ public class MainController {
 
     @GetMapping("/edit-employee/{clsnId}")
     public ModelAndView editCalisan(@PathVariable(name = "clsnId") Long id){
-    ModelAndView mav =new ModelAndView("edit-calisan");
+    ModelAndView mav =new ModelAndView("employees/edit-calisan");
     Calisan calisan = calisanService.getByCalisanId(id);
     mav.addObject("calisan",calisan);
 
@@ -101,7 +101,7 @@ public class MainController {
 
     @GetMapping("/add-info/{clsnId}")
     public ModelAndView addInfo(@PathVariable(name = "clsnId") Long id){
-        ModelAndView mav =new ModelAndView("addInfo");
+        ModelAndView mav =new ModelAndView("employees/addInfo");
         if(infoService.getInfoById(id)!=null){
         MoreInfo moreInfo = infoService.getInfoById(id);
         infoService.saveInfo(moreInfo);
@@ -151,7 +151,7 @@ public class MainController {
 
     @GetMapping("/edit-address/{calisanId}/{adressId}")
     public ModelAndView editAdress(@PathVariable(name = "calisanId")Long calisanId,@PathVariable("adressId")Long adressId){
-        ModelAndView mav =new ModelAndView("edit-adress");
+        ModelAndView mav =new ModelAndView("employees/edit-adress");
         AddressDropDown adress=addressDropDownService.getAdressById(adressId);
         calisanId=adress.getCalisanId();
         mav.addObject("adress",adress);
@@ -182,7 +182,7 @@ public class MainController {
         model.addAttribute("city",addressDropDown.getCity());
         model.addAttribute("district",addressDropDown.getDistrict());
         model.addAttribute("adressDetails",addressDropDown.getAddressDetails());
-        return "addressdropdown";
+        return "employees/addressdropdown";
     }
 
     @RequestMapping(value = "/save-addresss/{clsnId}",method = RequestMethod.POST)
@@ -205,7 +205,7 @@ public class MainController {
         }
         else
             model.addAttribute("listAdresses",adressList);
-        return "list-adresses";
+        return "employees/list-adresses";
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
@@ -255,14 +255,14 @@ public class MainController {
     public String index(Model model){
         List<User> listUsers= userRepository.findAll();
         model.addAttribute("users",listUsers);
-        return "admin-user-list";
+        return "admin/admin-user-list";
     }
 
     @RequestMapping("/employee/list")
     public String index3(Model model){
         List<Calisan> listCalisans = calisanService.listAllCalisans();
         model.addAttribute("listCalisans",listCalisans);
-        return "employee-list-user";
+        return "employees/employee-list-user.html";
     }
     @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping("/admin-panel")
@@ -271,20 +271,20 @@ public class MainController {
 
         map.put("adminname", auth.getName());
         map.put("title", "Yönetim Paneli");
-        return "admin-panel";
+        return "admin/admin-panel";
     }
     @GetMapping("/new-employee")
     public String newCalisan2(Model model){
         Calisan calisan = new Calisan();
         model.addAttribute("calisan",calisan);
-        return "new-calisan";
+        return "employees/new-calisan";
     }
 
     @RequestMapping("/employee/employees")
     public String adminEmployeeList(Model model){
         List<Calisan> listCalisans = calisanService.listAllCalisans();
         model.addAttribute("listCalisans",listCalisans);
-        return "admin-employee-list";
+        return "admin/admin-employee-list";
     }
 
 }
