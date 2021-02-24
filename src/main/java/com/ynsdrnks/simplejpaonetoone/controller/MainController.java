@@ -8,6 +8,7 @@ import com.ynsdrnks.simplejpaonetoone.security.repository.RoleRepository;
 import com.ynsdrnks.simplejpaonetoone.security.repository.UserRepository;
 import com.ynsdrnks.simplejpaonetoone.service.impl.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -72,7 +73,7 @@ public class MainController {
             calisan.setAdresses(adressList1);
             calisanService.save(calisan);
         }
-        return "redirect:/";
+        return "redirect:/employee/employees";
 }
 
 
@@ -80,13 +81,13 @@ public class MainController {
     public String addInfo(@ModelAttribute("moreInfo") MoreInfo moreInfo,Calisan calisan) {
         infoService.saveInfo(moreInfo);
         calisan.setMoreInfo(moreInfo);
-        return "redirect:/";
+        return "redirect:/employee/employees";
     }
 
     @RequestMapping(value = "delete-employee/{clsnId}",method = RequestMethod.GET)
     public String delete(@PathVariable("clsnId") Long id){
         calisanService.deleteById(id);
-        return "redirect:/";
+        return "redirect:/employee/employees";
     }
 
     @GetMapping("/edit-employee/{clsnId}")
@@ -137,7 +138,7 @@ public class MainController {
         calisan.getAdresses().add(adress);
         calisanService.save(calisan);
 
-        return "redirect:/";
+        return "redirect:/employee/employees";
     }
 
 
@@ -210,7 +211,7 @@ public class MainController {
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public String registerPage(Model model, Map<String, Object> map) {
         List<Role> roles = roleRepository.findAll();
-        map.put("title", "Kayıt Sayfası");
+        map.put("title", "Register Page");
         map.put("roles", roles);
         model.addAttribute("user", new User());
         return "register";
@@ -225,7 +226,7 @@ public class MainController {
             return "register";
         } else {
             Role role=new Role();
-            role.setRole("ADMIN");
+            role.setRole("USER");
             user.setRoles(new HashSet<Role>() {{
                 add(role);
             }});
@@ -250,11 +251,11 @@ public class MainController {
         return "index";
     }
 
-    @RequestMapping("/employee/employees")
+    @RequestMapping("/user/users")
     public String index(Model model){
-        List<Calisan> listCalisans = calisanService.listAllCalisans();
-        model.addAttribute("listCalisans",listCalisans);
-        return "admin-employee-list";
+        List<User> listUsers= userRepository.findAll();
+        model.addAttribute("users",listUsers);
+        return "admin-user-list";
     }
 
     @RequestMapping("/employee/list")
@@ -263,6 +264,7 @@ public class MainController {
         model.addAttribute("listCalisans",listCalisans);
         return "employee-list-user";
     }
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping("/admin-panel")
     public String secure(Map<String, Object> map) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -277,5 +279,13 @@ public class MainController {
         model.addAttribute("calisan",calisan);
         return "new-calisan";
     }
+
+    @RequestMapping("/employee/employees")
+    public String adminEmployeeList(Model model){
+        List<Calisan> listCalisans = calisanService.listAllCalisans();
+        model.addAttribute("listCalisans",listCalisans);
+        return "admin-employee-list";
+    }
+
 }
 

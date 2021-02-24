@@ -4,18 +4,19 @@
 
 <head>
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.5.3/css/bootstrap.min.css}" />
-    <title>Employee Management</title>
+    <title>User Management</title>
 </head>
 <body>
 <div align="center">
-    <h1>Employee List</h1>
-    <a class="btn btn-primary" href="/new-employee">Add New Employee</a>
+    <h1>User List</h1>
+    <a class="btn btn-primary" href="/register">Add New User</a>
     <a class="btn btn-primary" href="/admin-panel">Back to Panel</a>
     <br/><br/>
     <table border="1" cellpadding="10">
         <thead>
         <tr>
 
+            <th>User Name</th>
             <th>First Name</th>
             <th>Last Name</th>
             <th>Email</th>
@@ -23,20 +24,18 @@
         <tr>
         </thead>
         <tbody>
-        <tr th:each="clsn: ${listCalisans}">
+        <tr th:each="useracc: ${users}">
 
-            <td th:text="${clsn.clsnId}"hidden></td>
-            <td th:text="${clsn.clsnFirstName}">Name</td>
-            <td th:text="${clsn.clsnLastName}">Last Name</td>
-            <td th:text="${clsn.clsnEmail}">Email</td>
+            <td th:text="${useracc.user_id}"hidden></td>
+            <td th:text="${useracc.username}">User Name</td>
+            <td th:text="${useracc.firstname}">Name</td>
+            <td th:text="${useracc.lastname}">Last Name</td>
+            <td th:text="${useracc.email}">Email</td>
 
-            <td><a  class="btn btn-primary" th:href="@{'/edit-employee/' + ${clsn.clsnId}}">Edit</a>
+            <td><a th:href="@{'/user/update-user/' + ${useracc.email}+'/'}">Edit</a>
                 &nbsp
-                <a  class="btn btn-primary" th:href="@{'/delete-employee/' + ${clsn.clsnId}}">Delete</a>&nbsp;
+                <a th:href="@{'/user/delete-user/' + ${useracc.user_id}}">Delete</a>&nbsp;
                 &nbsp
-                <a  class="btn btn-primary" th:href="@{'/add-info/' + ${clsn.clsnId}}">Add Information</a>
-                &nbsp
-                <a  class="btn btn-primary" th:href="@{'/list-addresses/' + ${clsn.clsnId}}">Address</a>
             </td>
 
         </tr>

@@ -9,6 +9,7 @@
 <body>
 <div align="center">
     <h1>Çalışan Listesi</h1>
+    <a th:href="@{'/logout'}" class="btn btn-primary" >Logout</a>
     <br/><br/>
     <table border="1" cellpadding="10">
         <thead>
@@ -19,7 +20,9 @@
             <th>Email</th>
 
         <tr>
+
         </thead>
+
         <tbody>
         <tr th:each="clsn: ${listCalisans}">
 
@@ -30,7 +33,6 @@
 
         </tr>
 
-        <a th:href="@{'/logout'}" class="dropdown-item">Logout</a>
         </tbody>
     </table>
 </div>
