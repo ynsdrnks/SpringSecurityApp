@@ -66,11 +66,11 @@ public class UserController {
 				map.put("user", users.get(0));
 				return "user/user-update-panel";
 			}else {
-				map.put("message", email+" email adresi size ait değildir.");
+				map.put("message", email+" invalid email.");
 			}
 		}else {
 			
-			map.put("message", email+" email adresine ait kayıt bulunamamıştır..");
+			map.put("message", email+" invalid email..");
 		}
 		return "user/user-details";
 	}

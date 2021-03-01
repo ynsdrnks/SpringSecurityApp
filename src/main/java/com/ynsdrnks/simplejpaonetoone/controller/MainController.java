@@ -2,22 +2,27 @@ package com.ynsdrnks.simplejpaonetoone.controller;
 
 import com.ynsdrnks.simplejpaonetoone.converter.Converter;
 import com.ynsdrnks.simplejpaonetoone.entity.*;
+import com.ynsdrnks.simplejpaonetoone.security.domain.AuthRequest;
 import com.ynsdrnks.simplejpaonetoone.security.domain.Role;
 import com.ynsdrnks.simplejpaonetoone.security.domain.User;
 import com.ynsdrnks.simplejpaonetoone.security.repository.RoleRepository;
 import com.ynsdrnks.simplejpaonetoone.security.repository.UserRepository;
 import com.ynsdrnks.simplejpaonetoone.service.impl.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.*;
 
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -27,6 +32,12 @@ import javax.validation.Valid;
 
 @Controller
 public class MainController {
+//    @Autowired
+//    private JWTUtility jwtUtility;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
     @Autowired
     CalisanServiceImpl calisanService;
     @Autowired
@@ -292,5 +303,28 @@ public class MainController {
     public ModelAndView accessdenied() {
         return new ModelAndView("accessdenied");
     }
+
+//    @PostMapping("/authenticate")
+////    public JwtResponse authenticate(@RequestBody JwtRequest jwtRequest) throws Exception{
+////
+////        try {
+////            authenticationManager.authenticate(
+////                    new UsernamePasswordAuthenticationToken(
+////                            jwtRequest.getUsername(),
+////                            jwtRequest.getPassword()
+////                    )
+////            );
+////        } catch (BadCredentialsException e) {
+////            throw new Exception("INVALID_CREDENTIALS", e);
+////        }
+////
+////        final UserDetails userDetails
+////                = userService.loadUserByUsername(jwtRequest.getUsername());
+////
+////        final String token =
+////                jwtUtility.generateToken(userDetails);
+////
+////        return  new JwtResponse(token);
+////    }
 }
 

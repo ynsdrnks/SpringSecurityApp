@@ -30,6 +30,8 @@ public class AdminController {
 		return "User added succesfully";
 	}
 
+	
+
 //	@PreAuthorize("hasAnyRole('ADMIN')")
 //	@GetMapping("/admin/all")
 //	public String securedHello() {
