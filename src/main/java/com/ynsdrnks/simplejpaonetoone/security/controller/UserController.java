@@ -157,7 +157,11 @@ public class UserController {
 		return "redirect:/user/users";
 	}
 
-	
-	
+
+	@PostMapping("/sign-up")
+	public void signUp(@RequestBody User user) {
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		userRepository.save(user);
+	}
 
 }

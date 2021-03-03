@@ -4,7 +4,8 @@ import com.ynsdrnks.simplejpaonetoone.exception.CustomAccessDeniedHandler;
 //import com.ynsdrnks.simplejpaonetoone.security.filter.JWTAuthenticationFilter;
 //import com.ynsdrnks.simplejpaonetoone.security.filter.JWTAuthorizationFilter;
 import com.ynsdrnks.simplejpaonetoone.security.filter.JwtRequestFilter;
-import com.ynsdrnks.simplejpaonetoone.security.services.User_DetailsService;
+import com.ynsdrnks.simplejpaonetoone.security.services.UserDetailsServiceImpl;
+import com.ynsdrnks.simplejpaonetoone.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,8 +35,12 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+	public final static String AUTHORIZATION_HEADER = "Authorization";
 	@Autowired
-	private User_DetailsService userDetailsService;
+	private JwtUtil tokenProvider;
+
+	@Autowired
+	private UserDetailsServiceImpl userDetailsService;
 
 
 	@Autowired
@@ -55,12 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
-//		http.cors().and().csrf().disable().authorizeRequests()
-//        .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll().anyRequest().authenticated().and()
-//                .addFilter(new JWTAuthenticationFilter(authenticationManager()))
-//                .addFilter(new JWTAuthorizationFilter(authenticationManager()))
-//                // this disables session creation on Spring Security
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
 //		http
 //				.authorizeRequests()
 //				.antMatchers("/").permitAll()
@@ -70,8 +70,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //				.antMatchers(HttpMethod.POST,SIGN_UP_URL).permitAll()
 //				.anyRequest().authenticated()
 //				.and()
-//				.addFilter(new JWTAuthenticationFilter(authenticationManager()))
-//				.addFilter(new JWTAuthorizationFilter(authenticationManager()))
 //				.formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/employee/list")
 //				.and()
 //				.logout()
@@ -99,12 +97,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return super.authenticationManagerBean();
 	}
 
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
-        return source;
-    }
+	@Bean
+	CorsConfigurationSource corsConfigurationSource() {
+		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+		return source;
+	}
 
 
 

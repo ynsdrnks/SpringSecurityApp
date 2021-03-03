@@ -15,8 +15,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
                 "/webjars/**",
                 "/uploads/**",
                 "/img/**",
-                "/css/**",
-                "/js/**")
+                "/static/css/**",
+                "/static/js/**")
                 .addResourceLocations(
                         "classpath:/META-INF/resources/webjars/",
                         "classpath:/static/uploads/",

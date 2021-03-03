@@ -15,6 +15,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import com.fasterxml.jackson.core.type.TypeReference;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,9 +27,11 @@ public class SimpleJpaOneToOneApplication implements CommandLineRunner{
 	@Autowired
 	RoleRepository rolerepository;
 
+
 	public static void main(String[] args)
 	{
 				SpringApplication.run(SimpleJpaOneToOneApplication.class, args);
+
 	}
 
 
