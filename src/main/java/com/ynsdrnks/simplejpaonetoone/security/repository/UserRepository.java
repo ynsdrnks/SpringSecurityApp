@@ -14,4 +14,5 @@
 
      @Query("select u from User u Where u.email= :email")
      List<User> getUserByEmail(@Param("email") String email);
+
  }

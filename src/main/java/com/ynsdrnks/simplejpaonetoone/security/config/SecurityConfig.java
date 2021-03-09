@@ -18,8 +18,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -27,8 +26,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-//
-//import static com.ynsdrnks.simplejpaonetoone.security.filter.SecurityConstants.SIGN_UP_URL;
 
 @Configuration
 @EnableWebSecurity
@@ -55,30 +52,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		http.csrf().disable()
-				.authorizeRequests().antMatchers("/authenticate").permitAll().anyRequest().authenticated().
-				and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
 		http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+		http.authorizeRequests().antMatchers("/css/**").permitAll()
+				.antMatchers("/images/**", "/css/**",
+		 				"/js/**",
+						"/img/**",
+						"/**/favicon.ico",
+						"/webjars/**",
+						"/register").permitAll()
+				.antMatchers("/login", "/register").permitAll()
+//				.antMatchers("/admin-panel").hasRole("ADMIN").anyRequest().authenticated()
+				.and().formLogin().loginPage("/login").failureUrl("/login?error").permitAll().defaultSuccessUrl("/employee/list").permitAll()
+				.and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+				.logoutSuccessUrl("/login").permitAll()
+				.and()
+				.exceptionHandling().accessDeniedPage("/accessdenied")
+ 				.and()
+				.httpBasic();
+		http.csrf().disable();
 
-
-//		http
-//				.authorizeRequests()
-//				.antMatchers("/").permitAll()
-//				.antMatchers("/login").permitAll()
-//				.antMatchers("/register").permitAll()
-//				.antMatchers("/resources/**", "/static/**", "/static.css/**", "/js/**", "/static.images/**").permitAll()
-//				.antMatchers(HttpMethod.POST,SIGN_UP_URL).permitAll()
-//				.anyRequest().authenticated()
-//				.and()
-//				.formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/employee/list")
-//				.and()
-//				.logout()
-//				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-//				.logoutSuccessUrl("/login").permitAll().permitAll()
-//				.and()
-//				.exceptionHandling().accessDeniedPage("/accessdenied")
-//				.and()
-//				.httpBasic();;
 	}
 
 	@Bean

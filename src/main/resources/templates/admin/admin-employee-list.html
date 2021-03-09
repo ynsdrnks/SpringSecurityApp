@@ -8,8 +8,10 @@
 </head>
 <body>
 <div align="center">
+
     <h1>Employee List</h1>
     <a class="btn btn-primary" href="/new-employee">Add New Employee</a>
+    <a id="sendMailAll" class="btn btn-primary" href="/send-mail">Send Mail For All</a>
     <a class="btn btn-primary" href="/admin-panel">Back to Panel</a>
     <br/><br/>
     <table border="1" cellpadding="10">
@@ -37,6 +39,7 @@
                 <a  class="btn btn-primary" th:href="@{'/add-info/' + ${clsn.clsnId}}">Add Information</a>
                 &nbsp
                 <a  class="btn btn-primary" th:href="@{'/list-addresses/' + ${clsn.clsnId}}">Address</a>
+                <a id="sendMail" class="btn btn-primary" th:href="@{'/send-mail/' + ${clsn.clsnId}}">Send Mail</a>
             </td>
 
         </tr>
@@ -45,6 +48,18 @@
 </div>
 <script th:src="@{/webjars/jquery/3.5.1/jquery.min.js/}"></script>
 <script th:src="@{/webjars/bootstrap/4.5.3/js/bootstrap.min.js}"></script>
+<script>
+    $(document).ready(function() { //this is executed when the document is fully loaded
+        $("#sendMail").click(function () {
+            alert('Sending Information Mail');
+        });
+    });
 
+    $(document).ready(function() { //this is executed when the document is fully loaded
+        $("#sendMailAll").click(function () {
+            alert('Sending Information Mail For All');
+        });
+    });
+</script>
 </body>
 </html>

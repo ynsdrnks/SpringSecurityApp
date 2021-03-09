@@ -6,9 +6,11 @@ import com.ynsdrnks.simplejpaonetoone.security.domain.Role;
 import com.ynsdrnks.simplejpaonetoone.security.domain.User;
 import com.ynsdrnks.simplejpaonetoone.security.repository.RoleRepository;
 import com.ynsdrnks.simplejpaonetoone.security.repository.UserRepository;
+import com.ynsdrnks.simplejpaonetoone.security.services.NotificationService;
 import com.ynsdrnks.simplejpaonetoone.service.impl.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
@@ -55,6 +57,9 @@ public class MainController {
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+    private NotificationService notificationService;
 
     @RequestMapping("/")
     public String index() {
@@ -230,22 +235,17 @@ public class MainController {
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String saveRegisterPage(@Valid @ModelAttribute("user") User user, BindingResult result, Model model, Map<String, Object> map) {
-
+        Role role = new Role();
+        role.setRole("ADMIN");
         model.addAttribute("user", user);
         if (result.hasErrors()) {
             return "register";
         } else {
-            Role role=new Role();
-            role.setRole("USER");
-            user.setRoles(new HashSet<Role>() {{
-                add(role);
-            }});
             String pwd = user.getPassword();
             String encryptPwd = passwordEncoder.encode(pwd);
             user.setPassword(encryptPwd);
             map.put("message", "Successful");
             userRepository.save(user);
-
         }
         return "register";
     }
@@ -274,12 +274,10 @@ public class MainController {
         model.addAttribute("listCalisans",listCalisans);
         return "employees/employee-list-user.html";
     }
+
     @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping("/admin-panel")
     public String secure(Map<String, Object> map) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-        map.put("adminname", auth.getName());
         map.put("title", "Admin Panel");
         return "admin/admin-panel";
     }
@@ -302,6 +300,33 @@ public class MainController {
         return new ModelAndView("accessdenied");
     }
 
+    @RequestMapping("/send-mail")
+    public String sendMail() {
+        List<Calisan> calisans = calisanService.listAllCalisans();
 
+        try {
+
+            for (int i=0;i<calisans.size();i++){
+                notificationService.sendNotification(calisans.get(i));
+            }
+        }
+        catch (MailException e){
+
+        }
+        return "redirect:/employee/employees";
+    }
+
+    @RequestMapping("/send-mail/{clsnId}")
+    public String sendMailEmployee(@PathVariable(name = "clsnId") Long id) {
+
+        try {
+                notificationService.sendNotification(calisanService.getByCalisanId(id));
+            }
+
+        catch (MailException e){
+
+        }
+        return "redirect:/employee/employees";
+    }
 }
 
